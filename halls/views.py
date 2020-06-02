@@ -30,6 +30,12 @@ class SignUp(generic.CreateView):
         return view
 
 
+class ListHall(generic.ListView):
+    model = Hall
+    template_name = 'halls/list_hall.html'
+    # paginate_by = 10
+
+
 class CreateHall(generic.CreateView):
     model = Hall
     fields = ['title']

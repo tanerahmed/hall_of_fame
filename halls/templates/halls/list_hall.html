@@ -1,0 +1,16 @@
+{% extends 'halls/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Hall list</h2>
+    <ul>
+    {% for hall in object_list  %}
+        <li>{{ hall.title | title }} - with ID: {{ hall.id }}</li>
+    {% empty %}
+        <li>No halls !</li>
+    {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}
