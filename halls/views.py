@@ -5,6 +5,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from .models import Hall, Video
 from .forms import VideoForm, SearchForm
+from django.http import Http404, JsonResponse
+from django.forms.utils import ErrorList
+
+import urllib
+import requests
+
+
+YOUTUBE_API_KEY = 'AIzaSyD40DUpBwcOVYTa9_1mck3etHg9cuA0bRs'
 
 
 def home(request):
@@ -20,18 +28,49 @@ def add_video(request, pk):
     form = VideoForm()
     search_form = SearchForm()
 
+    hall = Hall.objects.get(pk=pk)
+    if not hall.user == request.user:
+        raise Http404
+
     if request.method == 'POST':
         #create
-        field_form = VideoForm(request.POST)
-        if field_form.is_valid():
+        form = VideoForm(request.POST)
+        if form.is_valid():
             video = Video()
-            video.url = field_form.cleaned_data['url']
-            video.title = field_form.cleaned_data['title']
-            video.youtube_id = field_form.cleaned_data['youtube_id']
-            video.hall = Hall.objects.get(pk=pk)
-            video.save()
+            video.hall = hall
 
-    return render(request, 'halls/add_video.html', {'form':form, 'search_form':search_form })
+            video.url = form.cleaned_data['url']
+            parsed_url = urllib.parse.urlparse(video.url)
+            video_id = urllib.parse.parse_qs(parsed_url.query).get('v')
+            if video_id:
+                video.youtube_id = video_id[0]
+                response = requests.get(f'https://www.googleapis.com/youtube/v3/videos?part=snippet&id={video_id[0]}&key={YOUTUBE_API_KEY}')
+                json = response.json()
+                try:
+                    title = json["items"][0]["snippet"]["title"]
+                    video.title = title
+                    video.save()
+                    return redirect('detail_hall', pk)
+                except KeyError:
+                    errors = form._errors.setdefault('url', ErrorList())
+                    errors.append('YouTube error: Daily Limit for API request is finished! Sorry try again later.')
+                except Exception:
+                    errors = form._errors.setdefault('url', ErrorList())
+                    errors.append('Somethings gone wrong, plaese try again later!')
+            else:
+                errors = form._errors.setdefault('url', ErrorList())
+                errors.append('Needs to be a YouTube URL')
+
+    return render(request, 'halls/add_video.html', {'form': form, 'search_form': search_form, 'hall': hall})
+
+
+def video_search(request):
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        encoded_search_term = urllib.parse.quote(search_form.cleaned_data['search_term'])
+        response = requests.get(f'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&q={ encoded_search_term }&key={YOUTUBE_API_KEY}')
+        return JsonResponse(response.json())
+    return JsonResponse({'error': 'Not able to validate form'})
 
 
 class SignUp(generic.CreateView):
@@ -86,3 +125,4 @@ class DeleteHall(generic.DeleteView):
     model = Hall
     template_name = 'halls/delete_hall.html'
     success_url = reverse_lazy('dashboard')
+
