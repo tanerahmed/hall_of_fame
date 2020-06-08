@@ -38,6 +38,10 @@ urlpatterns = [
     # Video
     path('halloffame/<int:pk>/addvideo/', views.add_video, name='add_video'),
     path('video/search', views.video_search, name='add_video'),
+
+    path('halloffame/<int:pk>/videos', views.ListHallVideos.as_view(), name='list_hall_videos'),
+    path('video/<int:pk>/delete', views.DeleteVideo.as_view(), name='delete_video'),
+
 ]
 
 

@@ -45,6 +45,7 @@ def add_video(request, pk):
             if video_id:
                 video.youtube_id = video_id[0]
                 response = requests.get(f'https://www.googleapis.com/youtube/v3/videos?part=snippet&id={video_id[0]}&key={YOUTUBE_API_KEY}')
+                print(response)
                 json = response.json()
                 try:
                     title = json["items"][0]["snippet"]["title"]
@@ -126,3 +127,22 @@ class DeleteHall(generic.DeleteView):
     template_name = 'halls/delete_hall.html'
     success_url = reverse_lazy('dashboard')
 
+
+class ListHallVideos(generic.ListView):
+    model = Video
+    template_name = 'videos/list_hall_videos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        videos = Video.objects.filter(hall_id=self.kwargs['pk'])
+
+        context['videos'] = videos
+
+        return context
+
+
+# VIDEO
+class DeleteVideo(generic.DeleteView):
+    model = Video
+    template_name = 'videos/delete_video.html'
+    success_url = reverse_lazy('dashboard')

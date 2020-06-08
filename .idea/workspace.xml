@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="079b7db9-f176-4941-a9e1-b82a83852010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/halls/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/halls/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/halls/templates/halls/add_video.html" beforeDir="false" afterPath="$PROJECT_DIR$/halls/templates/halls/add_video.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/halls/templates/halls/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/halls/templates/halls/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/halls/templates/halls/list_hall.html" beforeDir="false" afterPath="$PROJECT_DIR$/halls/templates/halls/list_hall.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/halls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/halls/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hofvidz/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/hofvidz/urls.py" afterDir="false" />
     </list>
@@ -41,7 +37,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../softuni" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
@@ -107,11 +103,11 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="2660" y="335" key="FileChooserDialogImpl" timestamp="1591172305814">
+    <state x="2660" y="335" key="FileChooserDialogImpl" timestamp="1591352687553">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
     <state x="740" y="335" key="FileChooserDialogImpl/1920.0.1920.1160/0.0.1920.1160@0.0.1920.1160" timestamp="1591089905838" />
-    <state x="2660" y="335" key="FileChooserDialogImpl/1920.0.1920.1160/0.0.1920.1160@1920.0.1920.1160" timestamp="1591172305814" />
+    <state x="2660" y="335" key="FileChooserDialogImpl/1920.0.1920.1160/0.0.1920.1160@1920.0.1920.1160" timestamp="1591352687553" />
     <state width="1899" height="321" key="GridCell.Tab.0.bottom" timestamp="1591188043284">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>

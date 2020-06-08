@@ -3,13 +3,13 @@
 {% block content %}
 <div class="container">
     <h2>Hall list</h2>
-    <ul>
-    {% for hall in object_list  %}
-        <li>{{ hall.title | title }} - with ID: {{ hall.id }}</li>
-    {% empty %}
-        <li>No halls !</li>
-    {% endfor %}
-    </ul>
+        <div class="list-group">
+        {% for hall in object_list  %}
+            <a href="{% url 'list_hall_videos' pk=hall.id %}" class="list-group-item list-group-item-action list-group-item-secondary">{{ hall.title | title }}</a>
+            {% empty %}
+            <a href="#" class="list-group-item list-group-item-action">No halls !</a>
+        {% endfor %}
+        </div>
 </div>
 
 
