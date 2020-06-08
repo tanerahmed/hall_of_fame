@@ -2,10 +2,13 @@
 
 {% block content %}
 <div class="container">
+
     <h2>Add Video to - {{hall.title}}</h2>
+
     <form method="POST" id="submit_video">
         {% csrf_token %}
         {% load widget_tweaks %}
+
         {% for field in form %}
         <div class="form-group {% if field.errors %}alert alert-danger {% endif %}">
             {{ field.errors }}
@@ -15,8 +18,10 @@
         {% endfor %}
         <button type="submit" class="btn btn-primary">Add</button>
     </form>
+
     <br>
     <h2>OR</h2>
+
     <form>
         {% for field in search_form %}
         <div class="form-group">

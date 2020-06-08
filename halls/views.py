@@ -108,7 +108,7 @@ class CreateHall(generic.CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         super(CreateHall, self).form_valid(form)
-        return redirect('home')
+        return redirect('dashboard')
 
 
 class DetailHall(generic.DetailView):
@@ -127,19 +127,6 @@ class DeleteHall(generic.DeleteView):
     model = Hall
     template_name = 'halls/delete_hall.html'
     success_url = reverse_lazy('dashboard')
-
-
-class ListHallVideos(generic.ListView):
-    model = Video
-    template_name = 'videos/list_hall_videos.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        videos = Video.objects.filter(hall_id=self.kwargs['pk'])
-
-        context['videos'] = videos
-
-        return context
 
 
 # VIDEO
