@@ -4,7 +4,8 @@
     <list default="true" id="079b7db9-f176-4941-a9e1-b82a83852010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/halls/templates/halls/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/halls/templates/halls/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/halls/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/halls/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/halls/templates/registration/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/halls/templates/registration/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/halls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/halls/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
