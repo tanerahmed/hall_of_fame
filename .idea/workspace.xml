@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="079b7db9-f176-4941-a9e1-b82a83852010" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hofvidz/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/hofvidz/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,6 +100,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="2645" y="383" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1591690514483">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="2645" y="383" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1160/0.0.1920.1160@1920.0.1920.1160" timestamp="1591690514483" />
     <state x="2660" y="335" key="FileChooserDialogImpl" timestamp="1591352687553">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>

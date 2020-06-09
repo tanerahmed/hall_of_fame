@@ -26,7 +26,7 @@ SECRET_KEY = 'ulbo(162@c9+wfrq4jbi=l1t162y8da-)rt0eio!ghjw599#t0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rocky-woodland-95928.herokuapp.com',]
 
 # REDIRECT URLS
 LOGIN_URL = 'login'
