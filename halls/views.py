@@ -7,7 +7,8 @@ from .models import Hall, Video
 from .forms import VideoForm, SearchForm
 from django.http import Http404, JsonResponse
 from django.forms.utils import ErrorList
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import urllib
 import requests
 
@@ -24,11 +25,92 @@ def home(request):
     return render(request, 'halls/home.html', {'recent_halls': recent_halls, 'popular_halls': popular_halls})
 
 
+@login_required
 def dashboard(request):
     halls = Hall.objects.filter(user=request.user)
     return render(request, 'halls/dashboard.html', {'halls': halls})
 
 
+class SignUp(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('dashboard')
+    template_name = 'registration/signup.html'
+
+    # Customize signup form, when user is created logged into the site
+    def form_valid(self, form):
+        # before return view ('home/') just do logged in the user and than return view ('home')
+        view = super(SignUp, self).form_valid(form)
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return view
+
+
+class ListHall(generic.ListView):
+    model = Hall
+    template_name = 'halls/list_hall.html'
+    # paginate_by = 10
+
+
+class CreateHall(LoginRequiredMixin, generic.CreateView):
+    model = Hall
+    fields = ['title']
+    template_name = 'halls/create_hall.html'
+    success_url = reverse_lazy('dashboard')
+
+    # Customize create hall form
+    # When create hall we assigned to the user which created the hall
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        super(CreateHall, self).form_valid(form)
+        return redirect('dashboard')
+
+
+class DetailHall(generic.DetailView):
+    model = Hall
+    template_name = 'halls/detail_hall.html'
+
+
+class UpdateHall(LoginRequiredMixin, generic.UpdateView):
+    model = Hall
+    template_name = 'halls/update_hall.html'
+    fields = ['title']
+    success_url = reverse_lazy('dashboard')
+
+    def get_object(self, queryset=None):
+        hall = super(UpdateHall, self).get_object()
+        if not hall.user == self.request.user:
+            raise Http404
+        return hall
+
+
+class DeleteHall(LoginRequiredMixin, generic.DeleteView):
+    model = Hall
+    template_name = 'halls/delete_hall.html'
+    success_url = reverse_lazy('dashboard')
+
+    def get_object(self, queryset=None):
+        hall = super(DeleteHall, self).get_object()
+        if not hall.user == self.request.user:
+            raise Http404
+        return hall
+
+
+# VIDEO
+class DeleteVideo(LoginRequiredMixin, generic.DeleteView):
+    model = Video
+    template_name = 'videos/delete_video.html'
+    success_url = reverse_lazy('dashboard')
+
+    def get_object(self, queryset=None):
+        video = super(DeleteVideo, self).get_object()
+        if not video.hall.user == self.request.user:
+            raise Http404
+        return video
+
+
+@login_required
 def add_video(request, pk):
     # pk == hall id
     form = VideoForm()
@@ -71,6 +153,7 @@ def add_video(request, pk):
     return render(request, 'halls/add_video.html', {'form': form, 'search_form': search_form, 'hall': hall})
 
 
+@login_required
 def video_search(request):
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
@@ -78,64 +161,3 @@ def video_search(request):
         response = requests.get(f'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&q={ encoded_search_term }&key={YOUTUBE_API_KEY}')
         return JsonResponse(response.json())
     return JsonResponse({'error': 'Not able to validate form'})
-
-
-class SignUp(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('dashboard')
-    template_name = 'registration/signup.html'
-
-    # Customize signup form, when user is created logged into the site
-    def form_valid(self, form):
-        # before return view ('home/') just do logged in the user and than return view ('home')
-        view = super(SignUp, self).form_valid(form)
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password1')
-        user = authenticate(username=username, password=password)
-        login(self.request, user)
-        return view
-
-
-class ListHall(generic.ListView):
-    model = Hall
-    template_name = 'halls/list_hall.html'
-    # paginate_by = 10
-
-
-class CreateHall(generic.CreateView):
-    model = Hall
-    fields = ['title']
-    template_name = 'halls/create_hall.html'
-    success_url = reverse_lazy('dashboard')
-
-    # Customize create hall form
-    # When create hall we assigned to the user which created the hall
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        super(CreateHall, self).form_valid(form)
-        return redirect('dashboard')
-
-
-class DetailHall(generic.DetailView):
-    model = Hall
-    template_name = 'halls/detail_hall.html'
-
-
-class UpdateHall(generic.UpdateView):
-    model = Hall
-    template_name = 'halls/update_hall.html'
-    fields = ['title']
-    success_url = reverse_lazy('dashboard')
-
-
-class DeleteHall(generic.DeleteView):
-    model = Hall
-    template_name = 'halls/delete_hall.html'
-    success_url = reverse_lazy('dashboard')
-
-
-# VIDEO
-class DeleteVideo(generic.DeleteView):
-    model = Video
-    template_name = 'videos/delete_video.html'
-    success_url = reverse_lazy('dashboard')
